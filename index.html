@@ -1,0 +1,860 @@
+<title>Loforge Université</title>
+
+<!--
+  Page de présentation de Loforge Université.
+
+  Système de conception : docs/design/01-typographie.md, 02-layout.md,
+  03-couleurs.md. Mêmes polices, mêmes couleurs, même échelle que la fenêtre
+  du logiciel. Ne rien inventer ici qui n'y soit pas.
+
+  CETTE PAGE EST UN GABARIT. Elle n'est pas publiée telle quelle :
+  livraison/telecharger.py remplace 1.1.3, 29,4 Mo et 13 septembre 2026 puis
+  la pousse dans le dépôt public loforge-universite-telechargement, servi par
+  GitHub Pages. Ne jamais écrire un numéro de version en dur ici.
+
+  Le bouton pointe vers /releases/latest/download/ : cette adresse suit
+  toujours la dernière version publiée. Le lien donné à quelqu'un ne périme
+  donc jamais, et le nom du fichier déposé ne doit jamais changer.
+-->
+
+<style>
+  /* ---------- Polices ------------------------------------------------- */
+  @font-face {
+    font-family: "Switzer"; font-style: normal; font-weight: 400;
+    src: url("polices/Switzer-Regular.woff2") format("woff2"); font-display: swap;
+  }
+  @font-face {
+    font-family: "Switzer"; font-style: normal; font-weight: 500;
+    src: url("polices/Switzer-Medium.woff2") format("woff2"); font-display: swap;
+  }
+  @font-face {
+    font-family: "Switzer"; font-style: normal; font-weight: 600;
+    src: url("polices/Switzer-Semibold.woff2") format("woff2"); font-display: swap;
+  }
+  @font-face {
+    font-family: "Zodiak"; font-style: normal; font-weight: 700;
+    src: url("polices/Zodiak-Bold.woff2") format("woff2"); font-display: swap;
+  }
+  @font-face {
+    font-family: "Zodiak"; font-style: italic; font-weight: 300;
+    src: url("polices/Zodiak-LightItalic.woff2") format("woff2"); font-display: swap;
+  }
+  @font-face {
+    font-family: "Martian Mono"; font-style: normal; font-weight: 400;
+    src: url("polices/MartianMono-NrRg.woff2") format("woff2"); font-display: swap;
+  }
+
+  /* ---------- Jetons -------------------------------------------------- */
+  /* Palette claire complète sur :root nu. Les deux blocs qui suivent ne
+     redéfinissent que des jetons — aucune couleur ne naît ailleurs qu'ici. */
+  :root {
+    --fond: #F4F3F7;
+    --fond-creux: #EDEBF2;
+    --panneau: #FFFFFF;
+    --panneau-haut: #FAF9FC;
+    --bordure: #E4E1EC;
+    --bordure-claire: #D3CFE0;
+    --texte: #17151D;
+    --attenue: #5A5566;
+    --faible: #6A6479;
+    --accent: #6D34E8;
+    --accent-clair: #7E4AEC;
+    --accent-teinte: #F0EAFD;
+    --accent-bordure: #D6C4FA;
+    --sur-accent: #FFFFFF;
+    --signal: #C42B1C;
+    --ombre: 0 1px 2px rgba(23, 21, 29, .06), 0 8px 24px rgba(23, 21, 29, .05);
+
+    /* Échelle Major Third 1.25, base 16 px */
+    --t-p: 1rem;
+    --t-h6: 1.25rem;
+    --t-h5: 1.5625rem;
+    --t-h4: 1.9531rem;
+    --t-h3: 2.4414rem;
+    --t-h2: 3.0518rem;
+    --t-h1: 3.8147rem;
+
+    /* Grille de 8 points */
+    --e1: 4px;  --e2: 8px;  --e3: 16px;
+    --e4: 24px; --e5: 32px; --e6: 48px;
+    --e7: 64px; --e8: 96px;
+
+    --gouttiere: 24px;
+    --largeur: 1200px;
+
+    --corps: "Switzer", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --titre: "Zodiak", Georgia, "Times New Roman", serif;
+    --mono: "Martian Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
+
+    color-scheme: light dark;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --fond: #141318;
+      --fond-creux: #0F0E12;
+      --panneau: #1E1C24;
+      --panneau-haut: #25222C;
+      --bordure: #2E2B36;
+      --bordure-claire: #403C4B;
+      --texte: #F2F0F6;
+      --attenue: #B6B1C2;
+      --faible: #8F8A9C;
+      --accent: #A78BFA;
+      --accent-clair: #BBA4FB;
+      --accent-teinte: #241F33;
+      --accent-bordure: #3D3356;
+      --sur-accent: #101216;
+      --signal: #E8574A;
+      --ombre: 0 1px 2px rgba(0, 0, 0, .5), 0 8px 24px rgba(0, 0, 0, .35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --fond: #141318;
+    --fond-creux: #0F0E12;
+    --panneau: #1E1C24;
+    --panneau-haut: #25222C;
+    --bordure: #2E2B36;
+    --bordure-claire: #403C4B;
+    --texte: #F2F0F6;
+    --attenue: #B6B1C2;
+    --faible: #8F8A9C;
+    --accent: #A78BFA;
+    --accent-clair: #BBA4FB;
+    --accent-teinte: #241F33;
+    --accent-bordure: #3D3356;
+    --sur-accent: #101216;
+    --signal: #E8574A;
+    --ombre: 0 1px 2px rgba(0, 0, 0, .5), 0 8px 24px rgba(0, 0, 0, .35);
+  }
+
+  /* ---------- Fondations ---------------------------------------------- */
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--fond);
+    color: var(--texte);
+    font-family: var(--corps);
+    font-size: var(--t-p);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: var(--largeur);
+    margin-inline: auto;
+    padding-inline: var(--gouttiere);
+  }
+
+  h1, h2, h3 {
+    font-family: var(--titre);
+    font-weight: 700;
+    text-wrap: balance;
+    margin: 0;
+  }
+  h1 { font-size: var(--t-h1); letter-spacing: -.02em; line-height: 1; }
+  h2 { font-size: var(--t-h3); letter-spacing: -.015em; line-height: 1.2; }
+  h3 { font-size: var(--t-h5); letter-spacing: -.0075em; line-height: 1.38; }
+  p  { margin: 0; max-width: 65ch; }
+
+  .oeil {
+    font-family: var(--corps);
+    font-weight: 600;
+    font-size: .8125rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--faible);
+    margin: 0;
+  }
+
+  a { color: inherit; }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  section { padding-block: var(--e8); }
+  section + section { border-top: 1px solid var(--bordure); }
+
+  .pile   { display: flex; flex-direction: column; gap: var(--e4); }
+  .pile-2 { display: flex; flex-direction: column; gap: var(--e2); }
+  .pile-3 { display: flex; flex-direction: column; gap: var(--e3); }
+
+  /* ---------- L'action, une seule par écran --------------------------- */
+  .obtenir {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--e2);
+    padding: 14px var(--e4);
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--sur-accent);
+    font-weight: 600;
+    font-size: var(--t-p);
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: background .15s ease, transform .15s ease;
+  }
+  .obtenir:hover { background: var(--accent-clair); }
+  .obtenir:active { transform: translateY(1px); }
+
+  .second {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--e2);
+    padding: 14px var(--e4);
+    border-radius: 8px;
+    background: transparent;
+    color: var(--texte);
+    font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--bordure-claire);
+  }
+  .second:hover { background: var(--panneau); }
+
+  .sous-action {
+    font-size: .8125rem;
+    color: var(--faible);
+  }
+
+  /* ---------- En-tête ------------------------------------------------- */
+  .bandeau {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e3);
+    flex-wrap: wrap;
+    padding-block: var(--e4);
+  }
+  .marque { display: flex; align-items: center; gap: var(--e3); }
+  .marque strong {
+    font-family: var(--titre);
+    font-weight: 700;
+    font-size: var(--t-h6);
+    letter-spacing: -.005em;
+  }
+  .semestre {
+    font-size: .8125rem;
+    color: var(--faible);
+  }
+
+  /* ---------- Ouverture ----------------------------------------------- */
+  .ouverture {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--e5) var(--e4);
+    align-items: start;
+    padding-block: var(--e7) var(--e8);
+  }
+  .ouverture .propos { grid-column: span 6; display: flex; flex-direction: column; gap: var(--e4); }
+  .ouverture .demo   { grid-column: span 6; }
+
+  .accroche em {
+    font-family: var(--titre);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+
+  .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--e3); }
+
+  /* ---------- Le panneau de transcription ----------------------------- */
+  .fenetre {
+    background: var(--panneau);
+    border: 1px solid var(--bordure);
+    border-radius: 12px;
+    box-shadow: var(--ombre);
+    overflow: hidden;
+  }
+  .fenetre-tete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e3);
+    padding: var(--e3) var(--e4);
+    background: var(--panneau-haut);
+    border-bottom: 1px solid var(--bordure);
+  }
+  .fenetre-tete h3 { font-size: var(--t-h6); letter-spacing: -.005em; }
+
+  .ecoute {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--e2);
+    font-size: .8125rem;
+    color: var(--signal);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .ecoute::before {
+    content: "";
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--signal);
+    animation: battre 2s ease-in-out infinite;
+  }
+  @keyframes battre { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+
+  .transcription {
+    padding: var(--e4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--e2);
+    min-height: 236px;
+  }
+  .transcription p { font-size: .9375rem; line-height: 1.6; max-width: none; }
+  .transcription .partiel { color: var(--accent); }
+  .doute {
+    color: var(--faible);
+    font-family: var(--mono);
+    font-size: .8125rem;
+    background: var(--fond-creux);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  .curseur {
+    display: inline-block;
+    width: 2px; height: 1em;
+    background: var(--accent);
+    vertical-align: -2px;
+    animation: clignoter 1.1s steps(2, start) infinite;
+  }
+  @keyframes clignoter { 50% { opacity: 0; } }
+
+  .fenetre-pied {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e3);
+    flex-wrap: wrap;
+    padding: var(--e3) var(--e4);
+    border-top: 1px solid var(--bordure);
+    background: var(--panneau-haut);
+  }
+  .cible { font-size: .8125rem; color: var(--faible); }
+  .faux-bouton {
+    padding: 8px var(--e3);
+    border-radius: 7px;
+    background: var(--accent);
+    color: var(--sur-accent);
+    font-size: .8125rem;
+    font-weight: 600;
+  }
+
+  /* ---------- Étapes --------------------------------------------------- */
+  .etapes {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--e5) var(--e4);
+    margin-top: var(--e6);
+  }
+  .etape { grid-column: span 4; display: flex; flex-direction: column; gap: var(--e2); }
+  .etape .rang {
+    font-weight: 600;
+    font-size: .8125rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-bottom: var(--e2);
+    border-bottom: 2px solid var(--accent-bordure);
+    width: fit-content;
+  }
+  .etape h3 { margin-top: var(--e2); }
+  .etape p { color: var(--attenue); }
+
+  kbd {
+    font-family: var(--mono);
+    font-size: .8125em;
+    background: var(--fond-creux);
+    border: 1px solid var(--bordure-claire);
+    border-radius: 5px;
+    padding: 2px 6px;
+    white-space: nowrap;
+  }
+
+  /* ---------- Ce que la séance laisse --------------------------------- */
+  .apres {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--e5) var(--e4);
+    align-items: start;
+    margin-top: var(--e6);
+  }
+  .apres .dit    { grid-column: span 5; display: flex; flex-direction: column; gap: var(--e3); }
+  .apres .arbre  { grid-column: span 7; }
+
+  .dossier {
+    background: var(--panneau);
+    border: 1px solid var(--bordure);
+    border-radius: 12px;
+    padding: var(--e4);
+    overflow-x: auto;
+  }
+  .dossier pre {
+    margin: 0;
+    font-family: var(--mono);
+    font-size: .8125rem;
+    line-height: 1.85;
+    color: var(--attenue);
+    letter-spacing: -.02em;
+  }
+  .dossier .nom { color: var(--texte); }
+  .dossier .sur { color: var(--accent); }
+  .dossier .note { color: var(--faible); }
+
+  /* ---------- Ce qui n'est pas promis --------------------------------- */
+  .franchise { background: var(--fond-creux); }
+  .limites {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--e4);
+    margin-top: var(--e6);
+    list-style: none;
+    padding: 0;
+  }
+  .limites li {
+    grid-column: span 6;
+    display: flex;
+    flex-direction: column;
+    gap: var(--e2);
+    padding-left: var(--e4);
+    border-left: 2px solid var(--bordure-claire);
+  }
+  .limites strong { font-weight: 600; }
+  .limites span { color: var(--attenue); }
+
+  .citation {
+    margin: var(--e6) 0 0;
+    padding: 0;
+    font-family: var(--titre);
+    font-style: italic;
+    font-weight: 300;
+    font-size: var(--t-h5);
+    line-height: 1.38;
+    letter-spacing: -.0075em;
+    color: var(--texte);
+    max-width: 30ch;
+  }
+
+  /* ---------- Garanties ------------------------------------------------ */
+  .garanties {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--e4);
+    margin-top: var(--e6);
+  }
+  .garantie {
+    grid-column: span 4;
+    background: var(--panneau);
+    border: 1px solid var(--bordure);
+    border-radius: 12px;
+    padding: var(--e4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--e2);
+  }
+  .garantie h3 { font-size: var(--t-h6); }
+  .garantie p { color: var(--attenue); font-size: .9375rem; }
+
+  /* ---------- Pré-requis ----------------------------------------------- */
+  .prerequis {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: var(--e4) var(--e4);
+    margin-top: var(--e6);
+    border-top: 1px solid var(--bordure);
+  }
+  .ligne {
+    grid-column: span 12;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--e4);
+    padding-block: var(--e3);
+    border-bottom: 1px solid var(--bordure);
+    align-items: baseline;
+  }
+  .ligne dt {
+    font-weight: 600;
+    font-size: .8125rem;
+    letter-spacing: .12em;
+    color: var(--faible);
+    text-transform: uppercase;
+  }
+  .ligne dd { margin: 0; color: var(--attenue); }
+  .ligne dd b { color: var(--texte); font-weight: 500; }
+
+  /* ---------- Clôture --------------------------------------------------- */
+  /* L'avertissement de Windows est la marche la plus haute de l'installation,
+     et la seule qui puisse faire abandonner quelqu'un avant la premiere
+     seconde d'usage. Il est donc traite comme un encadre a part, en teinte
+     d'accent : visible sans etre alarmant. Le rouge de signal est reserve a
+     ce qui est reellement casse. */
+  .alerte {
+    margin-top: var(--e6);
+    padding: var(--e5);
+    border: 1px solid var(--accent-bordure);
+    border-radius: 10px;
+    background: var(--accent-teinte);
+  }
+  .alerte h3 {
+    margin: 0 0 var(--e3);
+    font-size: var(--t-h6);
+    max-width: 34ch;
+  }
+  .alerte p {
+    margin: 0 0 var(--e3);
+    color: var(--attenue);
+    line-height: 1.5;
+    max-width: 62ch;
+  }
+  .alerte p:last-child { margin-bottom: 0; }
+  .alerte b { color: var(--texte); }
+
+  .cloture {
+    display: flex;
+    flex-direction: column;
+    gap: var(--e4);
+    align-items: flex-start;
+    padding-block: var(--e8);
+  }
+
+  footer {
+    border-top: 1px solid var(--bordure);
+    padding-block: var(--e5) var(--e7);
+    color: var(--faible);
+    font-size: .875rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--e2) var(--e4);
+    justify-content: space-between;
+  }
+  footer a { color: var(--attenue); }
+
+  /* ---------- Largeurs réduites ---------------------------------------- */
+  @media (max-width: 900px) {
+    :root { --t-h1: 2.75rem; --t-h2: 2.25rem; --t-h3: 1.875rem; }
+    .ouverture .propos,
+    .ouverture .demo,
+    .apres .dit,
+    .apres .arbre { grid-column: span 12; }
+    .etape { grid-column: span 6; }
+    .garantie { grid-column: span 6; }
+    section { padding-block: var(--e7); }
+  }
+
+  @media (max-width: 600px) {
+    :root { --t-h1: 2.25rem; --gouttiere: 16px; }
+    .etape,
+    .garantie,
+    .limites li { grid-column: span 12; }
+    .ligne { grid-template-columns: 1fr; gap: var(--e1); }
+    .actions { gap: var(--e2); }
+    .obtenir, .second { width: 100%; justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+    }
+  }
+</style>
+
+<div class="page">
+
+  <header class="bandeau">
+    <div class="marque">
+      <svg width="34" height="34" viewBox="0 0 64 64" role="img" aria-label="Loforge Université">
+        <defs>
+          <linearGradient id="forge" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#6D34E8" />
+            <stop offset="1" stop-color="#A78BFA" />
+          </linearGradient>
+        </defs>
+        <g stroke="url(#forge)" stroke-width="5.5" stroke-linecap="round">
+          <line x1="32" y1="22" x2="32" y2="7" />
+          <line x1="32" y1="42" x2="32" y2="57" />
+          <line x1="22" y1="32" x2="7" y2="32" />
+          <line x1="42" y1="32" x2="57" y2="32" />
+          <line x1="24.9" y1="24.9" x2="14.3" y2="14.3" />
+          <line x1="39.1" y1="39.1" x2="49.7" y2="49.7" />
+          <line x1="24.9" y1="39.1" x2="14.3" y2="49.7" />
+          <line x1="39.1" y1="24.9" x2="49.7" y2="14.3" />
+        </g>
+      </svg>
+      <div>
+        <strong>Loforge Université</strong>
+        <div class="semestre">version 1.1.3 · Windows</div>
+      </div>
+    </div>
+    <a class="second" href="#obtenir">Télécharger</a>
+  </header>
+
+  <div class="ouverture">
+    <div class="propos">
+      <p class="oeil">Transcription de cours magistraux</p>
+      <h1 class="accroche">En amphi, tu écris <em>ou</em> tu écoutes.</h1>
+      <p style="font-size: var(--t-h6); color: var(--attenue); line-height: 1.45;">
+        Loforge Université écrit le cours au fil de la parole, le range dans le
+        dossier de la séance selon ton emploi du temps, et te laisse corriger le
+        texte pendant qu'il défile.
+      </p>
+      <div class="actions">
+        <!-- L'unique action de la page. Voir le commentaire en tête de fichier. -->
+        <a class="obtenir" href="https://github.com/loismorquin2-create/loforge-universite-telechargement/releases/latest/download/LoforgeUniversite-installeur.exe">
+          Télécharger pour Windows
+        </a>
+        <span class="sous-action">gratuit · 29,4 Mo · Windows 10 et 11</span>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="fenetre">
+        <div class="fenetre-tete">
+          <h3>Transcription en direct</h3>
+          <span class="ecoute">en écoute</span>
+        </div>
+        <div class="transcription">
+          <p>
+            La fonction de production relie les quantités de facteurs employées
+            au volume produit. On note habituellement <em>Q = f(K, L)</em>, où
+            K désigne le capital et L le travail.
+          </p>
+          <p>
+            À court terme, le capital est fixe. Seul le travail varie, ce qui
+            nous amène à la notion de productivité marginale du
+            <span class="doute">[inaudible]</span> — reprenons&nbsp;: la
+            productivité marginale du travail.
+          </p>
+          <p class="partiel">
+            Elle décroît à partir d'un certain seuil<span class="curseur"></span>
+          </p>
+        </div>
+        <div class="fenetre-pied">
+          <span class="cible">→ CM · Microéconomie I · Amphi 4</span>
+          <span class="faux-bouton">Valider et enregistrer</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <p class="oeil">Une séance, trois gestes</p>
+    <h2>Tu choisis le cours, tu parles, tu valides.</h2>
+
+    <div class="etapes">
+      <div class="etape">
+        <span class="rang">Avant</span>
+        <h3>Le cours est déjà là</h3>
+        <p>
+          Importe le <b>.ics</b> de ton université une fois. La semaine s'affiche
+          avec tes amphis, tes salles et tes enseignants. Tu cliques sur la
+          séance de 8&nbsp;h&nbsp;: c'est elle qui décidera où le texte sera rangé.
+        </p>
+      </div>
+      <div class="etape">
+        <span class="rang">Pendant</span>
+        <h3>Le texte s'écrit tout seul</h3>
+        <p>
+          <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>R</kbd> lance la dictée de Windows.
+          Le texte arrive mot à mot, et tu peux le corriger, en supprimer un
+          passage ou écrire dedans pendant qu'il défile. Une alarme te prévient
+          si la dictée s'arrête.
+        </p>
+      </div>
+      <div class="etape">
+        <span class="rang">Après</span>
+        <h3>Claude relit, tu révises</h3>
+        <p>
+          Si tu as Claude Code, une commande relit la transcription contre les
+          supports du professeur et produit le cours corrigé, une fiche de
+          révision et des exercices. Sinon, le texte brut reste à toi.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="oeil">Ce qu'il reste sur ton disque</p>
+    <h2>Un dossier par séance, lisible sans le logiciel.</h2>
+
+    <div class="apres">
+      <div class="dit">
+        <p>
+          Rien n'est enfermé dans une base de données maison. Chaque cours est un
+          dossier de fichiers texte que tu peux ouvrir, copier, sauvegarder ou
+          emporter ailleurs.
+        </p>
+        <p>
+          Ce dossier t'appartient. Mettre à jour le logiciel n'y touche jamais,
+          et le désinstaller ne l'efface pas.
+        </p>
+      </div>
+      <div class="arbre">
+        <div class="dossier">
+<pre>S1/<span class="nom">UE1-Microeconomie</span>/<span class="nom">2026-09-10-microeconomie-CM</span>/
+├── <span class="nom">seance.json</span>                  <span class="note">matière, horaire, salle, enseignant</span>
+├── <span class="nom">transcription-directe-1.txt</span>  <span class="note">relue pendant le cours</span>
+├── <span class="nom">mes-notes.md</span>                 <span class="note">ce que tu écris toi</span>
+├── <span class="nom">vocabulaire.txt</span>              <span class="note">tes termes, jamais écrasés</span>
+├── <span class="nom">moodle/</span>                      <span class="note">les supports du professeur</span>
+├── <span class="sur">cours-corrige.md</span>             <span class="note">écrit par Claude</span>
+├── <span class="sur">fiche-revision.md</span>            <span class="note">écrit par Claude</span>
+└── <span class="sur">exercices.md</span>                 <span class="note">écrit par Claude</span></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="franchise">
+    <p class="oeil">À lire avant d'installer</p>
+    <h2>Ce que ce logiciel ne promet pas.</h2>
+
+    <ul class="limites">
+      <li>
+        <strong>La transcription est imparfaite.</strong>
+        <span>
+          Une reconnaissance vocale se trompe, surtout en amphithéâtre. Le texte
+          peut comporter des erreurs, des passages manquants ou des contresens.
+        </span>
+      </li>
+      <li>
+        <strong>Les documents produits par Claude peuvent être faux.</strong>
+        <span>
+          Ils ne valent pas un cours relu, et un corrigé d'exercice peut se
+          tromper. Un passage incompris est marqué <span class="doute">[inaudible]</span>,
+          une correction incertaine <span class="doute">[?]</span>.
+        </span>
+      </li>
+      <li>
+        <strong>La dictée peut s'interrompre.</strong>
+        <span>
+          Une alarme t'avertit pendant la séance, mais un cours peut être perdu.
+          C'est la raison pour laquelle le logiciel te montre en permanence s'il
+          écrit encore.
+        </span>
+      </li>
+      <li>
+        <strong>Ça ne remplace pas d'aller en cours.</strong>
+        <span>
+          Ni la prise de notes, ni le travail personnel, et ça ne garantit aucun
+          résultat aux examens. Tu restes responsable de vérifier ce que tu
+          révises.
+        </span>
+      </li>
+    </ul>
+
+    <p class="citation">
+      Un cours faux est pire qu'un cours incomplet&nbsp;: c'est dessus qu'on
+      révise.
+    </p>
+  </section>
+
+  <section>
+    <p class="oeil">Ce qu'il faut savoir</p>
+    <h2>Trois choses dites avant que tu installes.</h2>
+
+    <div class="garanties">
+      <div class="garantie">
+        <h3>Aucun son conservé</h3>
+        <p>
+          Il n'y a plus d'enregistrement audio du tout. Ni sur ton disque, ni
+          ailleurs&nbsp;: rien n'est gardé, donc rien ne pourra jamais être
+          réécouté.
+        </p>
+      </div>
+      <div class="garantie">
+        <h3>La reconnaissance passe par Google</h3>
+        <p>
+          C'est le prix d'un texte lisible en amphi&nbsp;: pendant la séance, le
+          son du micro transite par la reconnaissance vocale de Google, comme
+          avec la dictée d'un téléphone. Le texte obtenu, lui, reste chez toi.
+          Autant que tu le saches avant d'installer.
+        </p>
+      </div>
+      <div class="garantie">
+        <h3>Ni Moodle ni l'ENT</h3>
+        <p>
+          Le logiciel ne se connecte à aucun service de ton université et ne
+          stocke aucun identifiant. Ta clé, elle, se vérifie hors ligne&nbsp;:
+          elle ne dépend d'aucun serveur.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="obtenir">
+    <p class="oeil">Obtenir le logiciel</p>
+    <h2>Il est donné, jamais vendu.</h2>
+
+    <dl class="prerequis">
+      <div class="ligne">
+        <dt>Prix</dt>
+        <dd>
+          <b>Gratuit.</b> Diffusé par un particulier, en dehors de toute activité
+          commerciale&nbsp;: aucun paiement n'est demandé ni perçu, à aucun titre.
+        </dd>
+      </div>
+      <div class="ligne">
+        <dt>Système</dt>
+        <dd><b>Windows 10 ou 11</b>, et <b>Google Chrome</b>&nbsp;: c'est lui qui écoute et transforme la parole en texte.</dd>
+      </div>
+      <div class="ligne">
+        <dt>Ta clé</dt>
+        <dd>
+          Au premier lancement, le logiciel affiche un <b>code de poste</b>.
+          Tu l'envoies, tu reçois ta clé, tu la colles. Elle ne fonctionne que
+          sur cet ordinateur&nbsp;: la partager ne sert à rien.
+        </dd>
+      </div>
+      <div class="ligne">
+        <dt>Correction</dt>
+        <dd>
+          <b>Facultative.</b> Le cours corrigé, la fiche et les exercices
+          demandent Claude Code et un abonnement Claude. Sans eux, la
+          transcription et le classement fonctionnent quand même.
+        </dd>
+      </div>
+    </dl>
+
+    <div class="alerte">
+      <h3>Windows va t'avertir. C'est normal, voici quoi faire.</h3>
+      <p>
+        Au lancement de l'installeur, Windows affiche
+        <b>«&nbsp;Windows a protégé votre ordinateur&nbsp;»</b>. Clique sur
+        <b>Informations complémentaires</b>, puis sur
+        <b>Exécuter quand même</b>.
+      </p>
+      <p>
+        Faire certifier un logiciel auprès de Microsoft coûte plusieurs
+        centaines d'euros par an. Celui-ci ne l'est pas. Windows ne dit pas
+        qu'il est dangereux&nbsp;: il dit qu'il ne sait pas qui l'a écrit.
+        C'est moi.
+      </p>
+      <p class="sous-action">
+        Ton antivirus peut aussi s'inquiéter du raccourci clavier global. Il
+        est désactivé par défaut.
+      </p>
+    </div>
+
+    <div class="cloture">
+      <h3 style="max-width: 26ch;">Installe-le, puis envoie-moi ton code de poste.</h3>
+      <div class="actions">
+        <a class="obtenir" href="https://github.com/loismorquin2-create/loforge-universite-telechargement/releases/latest/download/LoforgeUniversite-installeur.exe">
+          Télécharger pour Windows
+        </a>
+        <span class="sous-action">29,4 Mo · version 1.1.3 · 13 septembre 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Loforge Université · Loïs Morquin · <a href="mailto:contact@loforge.fr">contact@loforge.fr</a></span>
+    <span class="sous-action">Zodiak &amp; Switzer (Fontshare) · Martian Mono (SIL OFL)</span>
+  </footer>
+
+</div>
