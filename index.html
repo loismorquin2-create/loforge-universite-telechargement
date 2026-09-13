@@ -1,4 +1,8 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Loforge Université</title>
+<meta name="description" content="Loforge Université écrit le texte d'un cours magistral au fil de la parole et le range par séance. Windows.">
 
 <!--
   Page de présentation de Loforge Université.
@@ -177,7 +181,6 @@
   }
 
   section { padding-block: var(--e8); }
-  section + section { border-top: 1px solid var(--bordure); }
 
   .pile   { display: flex; flex-direction: column; gap: var(--e4); }
   .pile-2 { display: flex; flex-direction: column; gap: var(--e2); }
@@ -251,13 +254,6 @@
   }
   .ouverture .propos { grid-column: span 6; display: flex; flex-direction: column; gap: var(--e4); }
   .ouverture .demo   { grid-column: span 6; }
-
-  .accroche em {
-    font-family: var(--titre);
-    font-style: italic;
-    font-weight: 300;
-    color: var(--accent);
-  }
 
   .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--e3); }
 
@@ -406,7 +402,6 @@
   .dossier .note { color: var(--faible); }
 
   /* ---------- Ce qui n'est pas promis --------------------------------- */
-  .franchise { background: var(--fond-creux); }
   .limites {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
@@ -420,8 +415,6 @@
     display: flex;
     flex-direction: column;
     gap: var(--e2);
-    padding-left: var(--e4);
-    border-left: 2px solid var(--bordure-claire);
   }
   .limites strong { font-weight: 600; }
   .limites span { color: var(--attenue); }
@@ -597,7 +590,7 @@
   <div class="ouverture">
     <div class="propos">
       <p class="oeil">Transcription de cours magistraux</p>
-      <h1 class="accroche">En amphi, tu écris <em>ou</em> tu écoutes.</h1>
+      <h1 class="accroche">En amphi, tu écris ou tu écoutes.</h1>
       <p style="font-size: var(--t-h6); color: var(--attenue); line-height: 1.45;">
         Loforge Université écrit le cours au fil de la parole, le range dans le
         dossier de la séance selon ton emploi du temps, et te laisse corriger le
@@ -608,7 +601,7 @@
         <a class="obtenir" href="https://github.com/loismorquin2-create/loforge-universite-telechargement/releases/latest/download/LoforgeUniversite-installeur.exe">
           Télécharger pour Windows
         </a>
-        <span class="sous-action">gratuit · 29,4 Mo · Windows 10 et 11</span>
+        <span class="sous-action">29,4 Mo · Windows 10 ou 11 · version 1.1.4</span>
       </div>
     </div>
 
@@ -710,7 +703,7 @@
     </div>
   </section>
 
-  <section class="franchise">
+  <section>
     <p class="oeil">À lire avant d'installer</p>
     <h2>Ce que ce logiciel ne promet pas.</h2>
 
