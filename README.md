@@ -32,4 +32,4 @@ corrigé, une fiche de révision et des exercices.
 Il ne contient que la page de téléchargement et l'installeur. Le code source
 n'est pas public.
 
-Version en ligne : **1.1.15** · Loïs Morquin · contact@loforge.fr
+Version en ligne : **1.1.16** · Loïs Morquin · contact@loforge.fr
