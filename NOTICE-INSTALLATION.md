@@ -119,5 +119,5 @@ n'ont aucun moyen de communiquer.
 
 ---
 
-*Version 1.2.2 — Loforge Université, édité par Loïs Morquin.
+*Version 1.2.3 — Loforge Université, édité par Loïs Morquin.
 Une question, un problème, une clé à demander : contact@loforge.fr*
